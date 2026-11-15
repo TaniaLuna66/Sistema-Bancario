@@ -1,0 +1,112 @@
+class CuentaBancaria:
+
+    def __init__(self, nombre):
+        # Atributos compartidos por las cuentas
+        self.nombre = nombre
+        self.limite = 5500
+        self.saldo = 0
+
+    def realizar_deposito(self, cantidad):
+        if cantidad <= 0:
+            print("La cantidad debe ser mayor que cero.")
+        elif cantidad > self.limite:
+            print("Lo sentimos, no puede abonar mas de $", self.limite)
+        else:
+            self.saldo += cantidad
+            print("Su abono de $", cantidad, "ha sido exitoso")
+            print("Su saldo actual es: $", self.saldo)
+
+    def mostrar_datos(self):
+        print("Titular:", self.nombre)
+        print("Limite de abono: $", self.limite)
+        print("Saldo actual: $", self.saldo)
+class CuentaAhorro(CuentaBancaria):
+
+    def __init__(self, nombre):
+        # Hereda los atributos de CuentaBancaria
+        super().__init__(nombre)
+        self.tasa_interes = 0.05
+
+    # Metodo exclusivo de CuentaAhorro
+    def calcular_interes(self):
+        interes = self.saldo * self.tasa_interes
+        print("Interes generado: $", interes)
+
+    # Sobrescritura del metodo de la clase base
+    def mostrar_datos(self):
+        super().mostrar_datos()
+        print("Tipo de cuenta: Ahorro")
+        print("Tasa de interes:", self.tasa_interes * 100, "%")
+
+# CLASE DERIVADA 2
+class CuentaNomina(CuentaBancaria):
+
+    def __init__(self, nombre, empresa):
+        # Hereda los atributos de CuentaBancaria
+        super().__init__(nombre)
+        self.empresa = empresa
+
+    # Metodo exclusivo de CuentaNomina
+    def mostrar_empresa(self):
+        print("Empresa del cliente:", self.empresa)
+
+    # Sobrescritura del metodo de la clase base
+    def mostrar_datos(self):
+        super().mostrar_datos()
+        print("Tipo de cuenta: Nomina")
+        self.mostrar_empresa()
+
+# PROGRAMA PRINCIPAL
+print("Bienvenido a mi banco")
+
+nombre = input("Inserta tu nombre: ")
+
+print("Hola,", nombre, "Bienvenido a tu banco")
+
+print("\nSeleccione el tipo de cuenta:")
+print("1. Cuenta de ahorro")
+print("2. Cuenta de nomina")
+
+tipo = input("Ingrese su opcion: ")
+
+if tipo == "1":
+    cuenta = CuentaAhorro(nombre)
+
+elif tipo == "2":
+    empresa = input("Ingrese el nombre de su empresa: ")
+    cuenta = CuentaNomina(nombre, empresa)
+
+else:
+    print("Opcion invalida.")
+    exit()
+
+# Ciclo para realizar operaciones bancarias
+while True:
+
+    print("\n¿Que operacion desea realizar?")
+    print("1. Realizar un abono")
+    print("2. Consultar datos de la cuenta")
+    print("3. Calcular interes (solo cuenta de ahorro)")
+    print("4. Salir")
+
+    opcion = input("Ingrese su opcion: ")
+
+    if opcion == "1":
+        cantidad = float(input("Ingrese la cantidad a abonar: "))
+        cuenta.realizar_deposito(cantidad)
+
+    elif opcion == "2":
+        cuenta.mostrar_datos()
+
+    elif opcion == "3":
+        if isinstance(cuenta, CuentaAhorro):
+            cuenta.calcular_interes()
+        else:
+            print("Esta opcion solo esta disponible para cuentas de ahorro.")
+
+    elif opcion == "4":
+        print("Gracias por usar nuestro banco, que tenga un buen dia")
+        break
+
+    else:
+        print("Opcion invalida, por favor intente de nuevo.")
