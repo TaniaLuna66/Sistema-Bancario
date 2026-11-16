@@ -1,7 +1,6 @@
 class CuentaBancaria:
 
     def __init__(self, nombre):
-        # Atributos compartidos por las cuentas
         self.nombre = nombre
         self.limite = 5500
         self.saldo = 0
@@ -23,40 +22,29 @@ class CuentaBancaria:
 class CuentaAhorro(CuentaBancaria):
 
     def __init__(self, nombre):
-        # Hereda los atributos de CuentaBancaria
         super().__init__(nombre)
         self.tasa_interes = 0.05
-
-    # Metodo exclusivo de CuentaAhorro
     def calcular_interes(self):
         interes = self.saldo * self.tasa_interes
         print("Interes generado: $", interes)
-
-    # Sobrescritura del metodo de la clase base
     def mostrar_datos(self):
         super().mostrar_datos()
         print("Tipo de cuenta: Ahorro")
         print("Tasa de interes:", self.tasa_interes * 100, "%")
 
-# CLASE DERIVADA 2
 class CuentaNomina(CuentaBancaria):
 
     def __init__(self, nombre, empresa):
-        # Hereda los atributos de CuentaBancaria
         super().__init__(nombre)
         self.empresa = empresa
-
-    # Metodo exclusivo de CuentaNomina
     def mostrar_empresa(self):
         print("Empresa del cliente:", self.empresa)
 
-    # Sobrescritura del metodo de la clase base
     def mostrar_datos(self):
         super().mostrar_datos()
         print("Tipo de cuenta: Nomina")
         self.mostrar_empresa()
 
-# PROGRAMA PRINCIPAL
 print("Bienvenido a mi banco")
 
 nombre = input("Inserta tu nombre: ")
@@ -80,7 +68,6 @@ else:
     print("Opcion invalida.")
     exit()
 
-# Ciclo para realizar operaciones bancarias
 while True:
 
     print("\n¿Que operacion desea realizar?")
